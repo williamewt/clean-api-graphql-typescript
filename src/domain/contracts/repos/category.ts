@@ -54,5 +54,5 @@ export namespace DeleteCategoryRepository {
     id: number
   }
 
-  export type Output = boolean
+  export type Output = Category | undefined
 }

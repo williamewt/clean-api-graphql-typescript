@@ -1,13 +1,13 @@
-import { Router, Express } from 'express'
-import { readdirSync } from 'fs'
-import { join } from 'path'
+import { Express } from 'express'
+import { graphqlHTTP } from 'express-graphql'
+import resolvers from '@/main/config/resolvers'
+import schema from '@/main/config/schema'
 
 export const setupRoutes = (app: Express): void => {
-  const router = Router()
-  readdirSync(join(__dirname, '../routes'))
-    .filter(file => !file.endsWith('.map'))
-    .map(async file => {
-      (await import(`../routes/${file}`)).default(router)
-    })
-  app.use(router)
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  app.use('/graphql', graphqlHTTP({
+    schema,
+    rootValue: resolvers,
+    graphiql: true
+  }))
 }

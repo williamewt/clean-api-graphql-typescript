@@ -1,9 +1,10 @@
 import { DeleteAuthorRepository } from '@/domain/contracts/repos'
+import { Author } from '@prisma/client'
 
 type Setup = (deleteAuthorRepo: DeleteAuthorRepository) => DeleteAuthor
 
 type Input = { id: number }
-type Output = boolean
+type Output = Author | undefined
 
 export type DeleteAuthor = (params: Input) => Promise<Output>
 

@@ -1,14 +1,22 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 import { DeleteAuthorRepository } from '@/domain/contracts/repos'
 import { DeleteAuthor, setupDeleteAuthor } from '@/domain/use-cases'
+import { Author } from '@prisma/client'
 
 describe('DeleteAuthor', () => {
   let sut: DeleteAuthor
   let deleteAuthorRepo: MockProxy<DeleteAuthorRepository>
+  let deletedData: Author
 
   beforeAll(() => {
     deleteAuthorRepo = mock()
-    deleteAuthorRepo.delete.mockResolvedValue(true)
+    deletedData = {
+      id: 1,
+      name: 'any_name',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    deleteAuthorRepo.delete.mockResolvedValue(deletedData)
   })
 
   beforeEach(() => {
@@ -22,17 +30,17 @@ describe('DeleteAuthor', () => {
     expect(deleteAuthorRepo.delete).toHaveBeenCalledTimes(1)
   })
 
-  it('Should return true if category was deleted', async () => {
+  it('Should return a author if was deleted', async () => {
     const deleteAuthor = await sut({ id: 1 })
 
-    expect(deleteAuthor).toBeTruthy()
+    expect(deleteAuthor).toEqual(deletedData)
   })
 
-  it('Should return false if category was not deleted', async () => {
-    deleteAuthorRepo.delete.mockResolvedValueOnce(false)
+  it('Should return undefined if author was not deleted', async () => {
+    deleteAuthorRepo.delete.mockResolvedValueOnce(undefined)
 
     const deleteAuthor = await sut({ id: 1 })
 
-    expect(deleteAuthor).toBeFalsy()
+    expect(deleteAuthor).toBeUndefined()
   })
 })

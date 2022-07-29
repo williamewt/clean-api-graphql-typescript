@@ -1,67 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import createPrismaMock from 'prisma-mock'
-import {
-  CreateCategoryRepository,
-  UpdateCategoryRepository,
-  GetAllCategoryRepository,
-  GetOneByIdCategoryRepository,
-  DeleteCategoryRepository
-} from '@/domain/contracts/repos'
-
-type CreateInput = CreateCategoryRepository.Input
-type CreateOutput = CreateCategoryRepository.Output
-type UpdateInput = UpdateCategoryRepository.Input
-type UpdateOutput = UpdateCategoryRepository.Output
-type GetAllOutput = GetAllCategoryRepository.Output
-type GetOneInput = GetOneByIdCategoryRepository.Input
-type GetOneOutput = GetOneByIdCategoryRepository.Output
-type DeleteInput = DeleteCategoryRepository.Input
-type DeleteOutput = DeleteCategoryRepository.Output
-
-export class PgCategoryRepository implements CreateCategoryRepository, UpdateCategoryRepository, GetAllCategoryRepository, GetOneByIdCategoryRepository, DeleteCategoryRepository {
-  constructor (private readonly client: PrismaClient) {}
-
-  async create ({ name }: CreateInput): Promise<CreateOutput> {
-    const pgCategory = await this.client.category.create({
-      data: { name }
-    })
-    return pgCategory
-  }
-
-  async update ({ id, name }: UpdateInput): Promise<UpdateOutput> {
-    await this.client.category.update({
-      where: { id },
-      data: { name }
-    })
-
-    const pgCategory = await this.client.category.findUnique({
-      where: { id }
-    })
-    if (pgCategory !== null) { return pgCategory }
-  }
-
-  async getAll (): Promise<GetAllOutput> {
-    const pgCategories = await this.client.category.findMany()
-    if (pgCategories !== null) { return pgCategories }
-  }
-
-  async getOneById ({ id }: GetOneInput): Promise<GetOneOutput> {
-    const pgCategory = await this.client.category.findUnique({
-      where: { id }
-    })
-    if (pgCategory !== null) { return pgCategory }
-  }
-
-  async delete ({ id }: DeleteInput): Promise<DeleteOutput> {
-    const pgCategory = await this.client.category.delete({
-      where: { id }
-    })
-    if (pgCategory !== null) {
-      return true
-    }
-    return false
-  }
-}
+import { PgCategoryRepository } from '@/infra/postgres/repos'
 
 describe('PgCategoryRepository', () => {
   let sut: PgCategoryRepository
@@ -99,6 +38,70 @@ describe('PgCategoryRepository', () => {
       })
 
       const category = await sut.update({ id: 2, name: 'any_other_name' })
+
+      expect(category).toBeUndefined()
+    })
+  })
+
+  describe('getAll', () => {
+    it('should returns a array of categories', async () => {
+      await client.category.create({
+        data: { name: 'any_name' }
+      })
+      await client.category.create({
+        data: { name: 'any_other_name' }
+      })
+
+      const categories = await sut.getAll()
+
+      expect(categories).toBeDefined()
+      expect(categories).toHaveLength(2)
+    })
+  })
+
+  describe('getOneById', () => {
+    it('should returns a category by id', async () => {
+      await client.category.create({
+        data: { name: 'any_name' }
+      })
+      await client.category.create({
+        data: { name: 'any_other_name' }
+      })
+
+      const category = await sut.getOneById({ id: 1 })
+
+      expect(category).toHaveProperty('id', 1)
+      expect(category).toHaveProperty('name', 'any_name')
+    })
+
+    it('should returns undefined if category not exists', async () => {
+      await client.category.create({
+        data: { name: 'any_name' }
+      })
+      await client.category.create({
+        data: { name: 'any_other_name' }
+      })
+
+      const category = await sut.getOneById({ id: 10 })
+
+      expect(category).toBeUndefined()
+    })
+  })
+
+  describe('delete', () => {
+    it('should returns true if delete category', async () => {
+      await client.category.create({
+        data: { name: 'any_name' }
+      })
+
+      const category = await sut.delete({ id: 1 })
+
+      expect(category).toBeDefined()
+      expect(category).toHaveLength(1)
+    })
+
+    it('should returns true if not delete category', async () => {
+      const category = await sut.delete({ id: 2 })
 
       expect(category).toBeUndefined()
     })

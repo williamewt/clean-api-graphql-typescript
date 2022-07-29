@@ -54,5 +54,5 @@ export namespace DeleteAuthorRepository {
     id: number
   }
 
-  export type Output = boolean
+  export type Output = Author | undefined
 }

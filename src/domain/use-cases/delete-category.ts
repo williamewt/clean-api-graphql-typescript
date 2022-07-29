@@ -1,9 +1,10 @@
 import { DeleteCategoryRepository } from '@/domain/contracts/repos'
+import { Category } from '@prisma/client'
 
 type Setup = (deleteCategoryRepo: DeleteCategoryRepository) => DeleteCategory
 
 type Input = { id: number }
-type Output = boolean
+type Output = Category | undefined
 
 export type DeleteCategory = (params: Input) => Promise<Output>
 

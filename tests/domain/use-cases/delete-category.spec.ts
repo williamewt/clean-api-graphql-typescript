@@ -1,14 +1,22 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 import { DeleteCategoryRepository } from '@/domain/contracts/repos'
 import { DeleteCategory, setupDeleteCategory } from '@/domain/use-cases'
+import { Category } from '@prisma/client'
 
 describe('DeleteCategory', () => {
   let sut: DeleteCategory
   let deleteCategoryRepo: MockProxy<DeleteCategoryRepository>
+  let deletedData: Category
 
   beforeAll(() => {
     deleteCategoryRepo = mock()
-    deleteCategoryRepo.delete.mockResolvedValue(true)
+    deletedData = {
+      id: 1,
+      name: 'any_name',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    deleteCategoryRepo.delete.mockResolvedValue(deletedData)
   })
 
   beforeEach(() => {
@@ -22,17 +30,17 @@ describe('DeleteCategory', () => {
     expect(deleteCategoryRepo.delete).toHaveBeenCalledTimes(1)
   })
 
-  it('Should return true if category was deleted', async () => {
+  it('Should return a category if was deleted', async () => {
     const deleteCategory = await sut({ id: 1 })
 
-    expect(deleteCategory).toBeTruthy()
+    expect(deleteCategory).toEqual(deletedData)
   })
 
-  it('Should return false if category was not deleted', async () => {
-    deleteCategoryRepo.delete.mockResolvedValueOnce(false)
+  it('Should return undefined if category was not deleted', async () => {
+    deleteCategoryRepo.delete.mockResolvedValueOnce(undefined)
 
     const deleteCategory = await sut({ id: 1 })
 
-    expect(deleteCategory).toBeFalsy()
+    expect(deleteCategory).toBeUndefined()
   })
 })

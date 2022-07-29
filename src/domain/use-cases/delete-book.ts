@@ -1,9 +1,10 @@
 import { DeleteBookRepository } from '@/domain/contracts/repos'
+import { Book } from '@prisma/client'
 
 type Setup = (deleteBookRepo: DeleteBookRepository) => DeleteBook
 
 type Input = { id: number }
-type Output = boolean
+type Output = Book | undefined
 
 export type DeleteBook = (params: Input) => Promise<Output>
 
