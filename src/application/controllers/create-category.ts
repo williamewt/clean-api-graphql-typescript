@@ -1,19 +1,19 @@
+import { Controller } from '@/application/controllers'
 import { CreateCategory } from '@/domain/use-cases'
 import { Category } from '@prisma/client'
-import { ServerError } from '@/application/errors'
+import { ok, serverError, HttpResponse } from '@/application/helpers'
 
 type Input = { name: string }
-type Output = Error | Category
 
-export class CreateCategoryController {
+export class CreateCategoryController implements Controller {
   constructor (private readonly createCategory: CreateCategory) {}
 
-  async handle (params: Input): Promise<Output> {
-    const category = await this.createCategory(params)
-    if (category !== undefined) {
-      return category
+  async handle (params: Input): Promise<HttpResponse<Category | Error>> {
+    try {
+      const category = await this.createCategory(params)
+      return ok(category)
+    } catch (error: any) {
+      return serverError(error)
     }
-
-    return new ServerError()
   }
 }

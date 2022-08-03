@@ -1,18 +1,17 @@
 import { GetAllBook } from '@/domain/use-cases'
 import { Book } from '@prisma/client'
-import { ServerError } from '@/application/errors'
+import { ok, serverError, HttpResponse } from '@/application/helpers'
+import { Controller } from '@/application/controllers'
 
-type Output = Error | Book[]
-
-export class GetAllBookController {
+export class GetAllBookController implements Controller {
   constructor (private readonly getAllBook: GetAllBook) {}
 
-  async handle (): Promise<Output> {
-    const category = await this.getAllBook()
-    if (category !== undefined) {
-      return category
+  async handle (): Promise<HttpResponse<Book[] | Error>> {
+    try {
+      const book = await this.getAllBook()
+      return ok(book)
+    } catch (error: any) {
+      return serverError(error)
     }
-
-    return new ServerError()
   }
 }

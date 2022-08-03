@@ -1,3 +1,4 @@
+export * from './controller'
 export * from './create-category'
 export * from './create-author'
 export * from './create-book'

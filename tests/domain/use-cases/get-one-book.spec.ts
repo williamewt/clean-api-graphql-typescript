@@ -33,16 +33,16 @@ describe('GetOneByIdBook', () => {
   })
 
   it('Should return one category by Id', async () => {
-    const author = await sut({ id: 1 })
+    const book = await sut({ id: 1 })
 
-    expect(author).toEqual(bookData)
+    expect(book).toEqual(bookData)
   })
 
-  it('Should return undefined if getOneByBookRepo.getOneById returns undefined', async () => {
+  it('Should return undefined  if getOneByBookRepo.getOneById returns undefined', async () => {
     getOneByBookRepo.getOneById.mockResolvedValueOnce(undefined)
 
-    const author = await sut({ id: 1 })
+    const book = await sut({ id: 1 })
 
-    expect(author).toBeUndefined()
+    expect(book).toBeUndefined()
   })
 })

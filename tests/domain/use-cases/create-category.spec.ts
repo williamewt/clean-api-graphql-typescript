@@ -37,12 +37,4 @@ describe('CreateCategory', () => {
 
     expect(newCategory).toEqual(categoryData)
   })
-
-  it('Should return undefined if createCategoryRepo.create returns undefined', async () => {
-    createCategoryRepo.create.mockResolvedValueOnce(undefined)
-
-    const newCategory = await sut(newCategoryData)
-
-    expect(newCategory).toBeUndefined()
-  })
 })

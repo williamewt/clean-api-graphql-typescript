@@ -2,7 +2,7 @@ import { GetAllCategoryRepository } from '@/domain/contracts/repos'
 import { Category } from '@prisma/client'
 
 type Setup = (getAllCategoryRepo: GetAllCategoryRepository) => GetAllCategory
-type Output = Category[] | undefined
+type Output = Category[]
 
 export type GetAllCategory = () => Promise<Output>
 

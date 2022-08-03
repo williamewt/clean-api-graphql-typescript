@@ -1,18 +1,17 @@
 import { GetAllAuthor } from '@/domain/use-cases'
 import { Author } from '@prisma/client'
-import { ServerError } from '@/application/errors'
+import { ok, serverError, HttpResponse } from '@/application/helpers'
+import { Controller } from '@/application/controllers'
 
-type Output = Error | Author[]
-
-export class GetAllAuthorController {
+export class GetAllAuthorController implements Controller {
   constructor (private readonly getAllAuthor: GetAllAuthor) {}
 
-  async handle (): Promise<Output> {
-    const author = await this.getAllAuthor()
-    if (author !== undefined) {
-      return author
+  async handle (): Promise<HttpResponse<Author[] | Error>> {
+    try {
+      const author = await this.getAllAuthor()
+      return ok(author)
+    } catch (error: any) {
+      return serverError(error)
     }
-
-    return new ServerError()
   }
 }

@@ -4,7 +4,7 @@ import { Author } from '@prisma/client'
 type Setup = (deleteAuthorRepo: DeleteAuthorRepository) => DeleteAuthor
 
 type Input = { id: number }
-type Output = Author | undefined
+type Output = Author
 
 export type DeleteAuthor = (params: Input) => Promise<Output>
 

@@ -76,8 +76,6 @@ export class PgBookRepository implements CreateBookRepository, UpdateBookReposit
         author: true
       }
     })
-    if (Object.keys(pgBook).length > 0) {
-      return pgBook
-    }
+    return pgBook
   }
 }

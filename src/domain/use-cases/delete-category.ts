@@ -4,7 +4,7 @@ import { Category } from '@prisma/client'
 type Setup = (deleteCategoryRepo: DeleteCategoryRepository) => DeleteCategory
 
 type Input = { id: number }
-type Output = Category | undefined
+type Output = Category
 
 export type DeleteCategory = (params: Input) => Promise<Output>
 

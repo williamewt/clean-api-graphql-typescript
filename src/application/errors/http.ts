@@ -5,3 +5,17 @@ export class ServerError extends Error {
     this.stack = error?.stack
   }
 }
+
+export class NotUpdateError extends Error {
+  constructor (name: string) {
+    super(`${name} not updated`)
+    this.name = 'ServerError'
+  }
+}
+
+export class NotFindError extends Error {
+  constructor (name: string) {
+    super(`${name} not find`)
+    this.name = 'ServerError'
+  }
+}

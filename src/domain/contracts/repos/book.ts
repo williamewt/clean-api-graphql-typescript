@@ -11,7 +11,7 @@ export namespace CreateBookRepository {
     authorId: number
   }
 
-  export type Output = Book | undefined
+  export type Output = Book
 }
 
 export interface UpdateBookRepository {
@@ -34,7 +34,7 @@ export interface GetAllBookRepository {
 }
 
 export namespace GetAllBookRepository {
-  export type Output = Book[] | undefined
+  export type Output = Book[]
 }
 
 export interface GetOneByIdBookRepository {
@@ -58,5 +58,5 @@ export namespace DeleteBookRepository {
     id: number
   }
 
-  export type Output = Book | undefined
+  export type Output = Book
 }

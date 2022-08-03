@@ -1,19 +1,19 @@
 import { DeleteAuthor } from '@/domain/use-cases'
 import { Author } from '@prisma/client'
-import { ServerError } from '@/application/errors'
+import { ok, serverError, HttpResponse } from '@/application/helpers'
+import { Controller } from '@/application/controllers'
 
 type Input = { id: number }
-type Output = Error | Author
 
-export class DeleteAuthorController {
+export class DeleteAuthorController implements Controller {
   constructor (private readonly deleteAuthor: DeleteAuthor) {}
 
-  async handle (params: Input): Promise<Output> {
-    const category = await this.deleteAuthor(params)
-    if (category !== undefined) {
-      return category
+  async handle (params: Input): Promise<HttpResponse<Author | Error>> {
+    try {
+      const author = await this.deleteAuthor(params)
+      return ok(author)
+    } catch (error: any) {
+      return serverError(error)
     }
-
-    return new ServerError()
   }
 }

@@ -38,11 +38,11 @@ describe('UpdateAuthor', () => {
     expect(newAuthor).toEqual(authorData)
   })
 
-  it('Should return undefined if updateAuthorRepo.update returns undefined', async () => {
+  it('Should return undefined if updateAuthorRepo.getOneById returns undefined', async () => {
     updateAuthorRepo.update.mockResolvedValueOnce(undefined)
 
-    const newAuthor = await sut(newAuthorData)
+    const author = await sut(newAuthorData)
 
-    expect(newAuthor).toBeUndefined()
+    expect(author).toBeUndefined()
   })
 })

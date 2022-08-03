@@ -9,7 +9,7 @@ type Input = {
   authorId: number
 }
 
-type Output = Book | undefined
+type Output = Book
 
 export type CreateBook = (params: Input) => Promise<Output>
 

@@ -4,7 +4,7 @@ import { Category } from '@prisma/client'
 type Setup = (createCategoryRepo: CreateCategoryRepository) => CreateCategory
 
 type Input = { name: string }
-type Output = Category | undefined
+type Output = Category
 
 export type CreateCategory = (params: Input) => Promise<Output>
 

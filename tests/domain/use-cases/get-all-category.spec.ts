@@ -30,12 +30,4 @@ describe('GetAllCategory', () => {
 
     expect(categories).toEqual(categoryData)
   })
-
-  it('Should return undefined if getAllCategoryRepo.getAll returns undefined', async () => {
-    getAllCategoryRepo.getAll.mockResolvedValueOnce(undefined)
-
-    const categories = await sut()
-
-    expect(categories).toBeUndefined()
-  })
 })

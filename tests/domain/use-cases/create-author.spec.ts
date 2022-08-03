@@ -37,12 +37,4 @@ describe('CreateAuthor', () => {
 
     expect(newAuthor).toEqual(authorData)
   })
-
-  it('Should return undefined if createAuthorRepo.create returns undefined', async () => {
-    createAuthorRepo.create.mockResolvedValueOnce(undefined)
-
-    const newAuthor = await sut(newAuthorData)
-
-    expect(newAuthor).toBeUndefined()
-  })
 })

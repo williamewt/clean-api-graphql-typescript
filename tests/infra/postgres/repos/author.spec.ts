@@ -99,11 +99,5 @@ describe('PgAuthorRepository', () => {
       expect(author).toBeDefined()
       expect(author).toHaveLength(1)
     })
-
-    it('should returns true if not delete author', async () => {
-      const author = await sut.delete({ id: 2 })
-
-      expect(author).toBeUndefined()
-    })
   })
 })

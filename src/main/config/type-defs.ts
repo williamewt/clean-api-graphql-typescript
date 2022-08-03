@@ -1,6 +1,6 @@
-import { buildSchema } from 'graphql'
+import { gql } from 'apollo-server-express'
 
-export default buildSchema(`
+export default gql`
   type Category {
     id: ID,
     name: String,
@@ -32,14 +32,14 @@ export default buildSchema(`
   type Mutation {
     createCategory(name: String!): Category,
     updateCategory(id: ID!, name: String): Category,
-    deleteCategory(id: ID!): Boolean
+    deleteCategory(id: ID!): Category
 
     createAuthor(name: String!): Author,
     updateAuthor(id: ID!, name: String): Author,
-    deleteAuthor(id: ID!): Boolean,
+    deleteAuthor(id: ID!): Author,
 
-    createBook(name: String!, category_id: Int, author_id: Int): Book,
-    updateBook(id: ID!, name: String, category_id: Int, author_id: Int): Book,
-    deleteBook(id: ID!): Boolean
+    createBook(name: String!, categoryId: Int, authorId: Int): Book,
+    updateBook(id: ID!, name: String, categoryId: Int, authorId: Int): Book,
+    deleteBook(id: ID!): Book
   }
-`)
+`

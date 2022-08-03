@@ -35,12 +35,4 @@ describe('DeleteAuthor', () => {
 
     expect(deleteAuthor).toEqual(deletedData)
   })
-
-  it('Should return undefined if author was not deleted', async () => {
-    deleteAuthorRepo.delete.mockResolvedValueOnce(undefined)
-
-    const deleteAuthor = await sut({ id: 1 })
-
-    expect(deleteAuthor).toBeUndefined()
-  })
 })

@@ -50,11 +50,11 @@ describe('UpdateBook', () => {
     expect(newBook).toEqual(bookData)
   })
 
-  it('Should return undefined if updateBookRepo.update returns undefined', async () => {
+  it('Should return undefined if updateBookRepo.getOneById returns undefined', async () => {
     updateBookRepo.update.mockResolvedValueOnce(undefined)
 
-    const newBook = await sut(newBookData)
+    const book = await sut(newBookData)
 
-    expect(newBook).toBeUndefined()
+    expect(book).toBeUndefined()
   })
 })

@@ -3,7 +3,7 @@ import { GetAllBookRepository } from '@/domain/contracts/repos'
 
 type Setup = (getAllBookRepo: GetAllBookRepository) => GetAllBook
 
-type Output = Book[] | undefined
+type Output = Book[]
 
 export type GetAllBook = () => Promise<Output>
 

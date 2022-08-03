@@ -47,12 +47,4 @@ describe('CreateBook', () => {
 
     expect(newBook).toEqual(bookData)
   })
-
-  it('Should return undefined if createBookRepo.create returns undefined', async () => {
-    createBookRepo.create.mockResolvedValueOnce(undefined)
-
-    const newBook = await sut(newBookData)
-
-    expect(newBook).toBeUndefined()
-  })
 })

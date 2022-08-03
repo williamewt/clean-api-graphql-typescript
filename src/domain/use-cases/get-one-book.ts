@@ -8,6 +8,6 @@ type Output = Book | undefined
 export type GetOneByIdBook = (params: Input) => Promise<Output>
 
 export const setupGetOneByIdBook: Setup = (getOneByBookRepo) => async params => {
-  const books = await getOneByBookRepo.getOneById(params)
-  return books
+  const book = await getOneByBookRepo.getOneById(params)
+  return book
 }

@@ -9,6 +9,6 @@ type Output = Author | undefined
 export type UpdateAuthor = (params: Input) => Promise<Output>
 
 export const setupUpdateAuthor: Setup = (updateAuthorRepo) => async params => {
-  const category = await updateAuthorRepo.update(params)
-  return category
+  const author = await updateAuthorRepo.update(params)
+  return author
 }

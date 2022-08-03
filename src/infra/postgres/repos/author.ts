@@ -55,8 +55,6 @@ export class PgAuthorRepository implements CreateAuthorRepository, UpdateAuthorR
     const pgAuthor = await this.client.author.delete({
       where: { id }
     })
-    if (Object.keys(pgAuthor).length > 0) {
-      return pgAuthor
-    }
+    return pgAuthor
   }
 }

@@ -145,11 +145,5 @@ describe('PgBookRepository', () => {
       expect(book).toBeDefined()
       expect(book).toHaveLength(1)
     })
-
-    it('should returns true if not delete book', async () => {
-      const book = await sut.delete({ id: 1 })
-
-      expect(book).toBeUndefined()
-    })
   })
 })

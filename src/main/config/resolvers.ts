@@ -15,29 +15,30 @@ import {
   makeGetOneByIdAuthorController,
   makeGetOneByIdBookController
 } from '@/main/factories/controllers'
+import { adaptResolver } from '@/main/adapters'
 
 export default {
   Query: {
-    categories: makeGetAllCategoryController().handle,
-    getCategoryById: makeGetOneByIdCategoryController().handle,
+    categories: adaptResolver(makeGetAllCategoryController()),
+    getCategoryById: adaptResolver(makeGetOneByIdCategoryController()),
 
-    authors: makeGetAllAuthorController().handle,
-    getAuthorById: makeGetOneByIdAuthorController().handle,
+    authors: adaptResolver(makeGetAllAuthorController()),
+    getAuthorById: adaptResolver(makeGetOneByIdAuthorController()),
 
-    books: makeGetAllBookController().handle,
-    getBookById: makeGetOneByIdBookController().handle
+    books: adaptResolver(makeGetAllBookController()),
+    getBookById: adaptResolver(makeGetOneByIdBookController())
   },
   Mutation: {
-    createCategory: makeCreateCategoryController().handle,
-    updateCategory: makeUpdateCategoryController().handle,
-    deleteCategory: makeDeleteCategoryController().handle,
+    createCategory: adaptResolver(makeCreateCategoryController()),
+    updateCategory: adaptResolver(makeUpdateCategoryController()),
+    deleteCategory: adaptResolver(makeDeleteCategoryController()),
 
-    createAuthor: makeCreateAuthorController().handle,
-    updateAuthor: makeUpdateAuthorController().handle,
-    deleteAuthor: makeDeleteAuthorController().handle,
+    createAuthor: adaptResolver(makeCreateAuthorController()),
+    updateAuthor: adaptResolver(makeUpdateAuthorController()),
+    deleteAuthor: adaptResolver(makeDeleteAuthorController()),
 
-    createBook: makeCreateBookController().handle,
-    updateBook: makeUpdateBookController().handle,
-    deleteBook: makeDeleteBookController().handle
+    createBook: adaptResolver(makeCreateBookController()),
+    updateBook: adaptResolver(makeUpdateBookController()),
+    deleteBook: adaptResolver(makeDeleteBookController())
   }
 }

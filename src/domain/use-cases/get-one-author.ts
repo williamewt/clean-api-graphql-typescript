@@ -8,6 +8,6 @@ type Output = Author | undefined
 export type GetOneByIdAuthor = (params: Input) => Promise<Output>
 
 export const setupGetOneByIdAuthor: Setup = (getOneByAuthorRepo) => async params => {
-  const categories = await getOneByAuthorRepo.getOneById(params)
-  return categories
+  const author = await getOneByAuthorRepo.getOneById(params)
+  return author
 }

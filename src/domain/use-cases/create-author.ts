@@ -4,7 +4,7 @@ import { Author } from '@prisma/client'
 type Setup = (createAuthorRepo: CreateAuthorRepository) => CreateAuthor
 
 type Input = { name: string }
-type Output = Author | undefined
+type Output = Author
 
 export type CreateAuthor = (params: Input) => Promise<Output>
 

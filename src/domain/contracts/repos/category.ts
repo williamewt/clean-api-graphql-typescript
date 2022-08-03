@@ -9,7 +9,7 @@ export namespace CreateCategoryRepository {
     name: string
   }
 
-  export type Output = Category | undefined
+  export type Output = Category
 }
 
 export interface UpdateCategoryRepository {
@@ -30,7 +30,7 @@ export interface GetAllCategoryRepository {
 }
 
 export namespace GetAllCategoryRepository {
-  export type Output = Category[] | undefined
+  export type Output = Category[]
 }
 
 export interface GetOneByIdCategoryRepository {
@@ -54,5 +54,5 @@ export namespace DeleteCategoryRepository {
     id: number
   }
 
-  export type Output = Category | undefined
+  export type Output = Category
 }

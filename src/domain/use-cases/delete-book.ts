@@ -4,7 +4,7 @@ import { Book } from '@prisma/client'
 type Setup = (deleteBookRepo: DeleteBookRepository) => DeleteBook
 
 type Input = { id: number }
-type Output = Book | undefined
+type Output = Book
 
 export type DeleteBook = (params: Input) => Promise<Output>
 

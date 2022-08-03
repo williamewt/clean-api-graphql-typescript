@@ -99,11 +99,5 @@ describe('PgCategoryRepository', () => {
       expect(category).toBeDefined()
       expect(category).toHaveLength(1)
     })
-
-    it('should returns true if not delete category', async () => {
-      const category = await sut.delete({ id: 2 })
-
-      expect(category).toBeUndefined()
-    })
   })
 })

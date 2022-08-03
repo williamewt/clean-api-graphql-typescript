@@ -32,12 +32,4 @@ describe('GetAllBook', () => {
 
     expect(authors).toEqual(bookData)
   })
-
-  it('Should return undefined if getAllBookRepo.getAll returns undefined', async () => {
-    getAllBookRepo.getAll.mockResolvedValueOnce(undefined)
-
-    const authors = await sut()
-
-    expect(authors).toBeUndefined()
-  })
 })

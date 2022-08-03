@@ -55,8 +55,6 @@ export class PgCategoryRepository implements CreateCategoryRepository, UpdateCat
     const pgCategory = await this.client.category.delete({
       where: { id }
     })
-    if (Object.keys(pgCategory).length > 0) {
-      return pgCategory
-    }
+    return pgCategory
   }
 }

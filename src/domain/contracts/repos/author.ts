@@ -9,7 +9,7 @@ export namespace CreateAuthorRepository {
     name: string
   }
 
-  export type Output = Author | undefined
+  export type Output = Author
 }
 
 export interface UpdateAuthorRepository {
@@ -30,7 +30,7 @@ export interface GetAllAuthorRepository {
 }
 
 export namespace GetAllAuthorRepository {
-  export type Output = Author[] | undefined
+  export type Output = Author[]
 }
 
 export interface GetOneByIdAuthorRepository {
@@ -54,5 +54,5 @@ export namespace DeleteAuthorRepository {
     id: number
   }
 
-  export type Output = Author | undefined
+  export type Output = Author
 }

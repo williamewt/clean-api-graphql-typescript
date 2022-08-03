@@ -35,12 +35,4 @@ describe('DeleteCategory', () => {
 
     expect(deleteCategory).toEqual(deletedData)
   })
-
-  it('Should return undefined if category was not deleted', async () => {
-    deleteCategoryRepo.delete.mockResolvedValueOnce(undefined)
-
-    const deleteCategory = await sut({ id: 1 })
-
-    expect(deleteCategory).toBeUndefined()
-  })
 })

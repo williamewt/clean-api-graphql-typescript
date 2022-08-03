@@ -1,18 +1,17 @@
 import { GetAllCategory } from '@/domain/use-cases'
 import { Category } from '@prisma/client'
-import { ServerError } from '@/application/errors'
+import { ok, serverError, HttpResponse } from '@/application/helpers'
+import { Controller } from '@/application/controllers'
 
-type Output = Error | Category[]
-
-export class GetAllCategoryController {
+export class GetAllCategoryController implements Controller {
   constructor (private readonly getAllCategory: GetAllCategory) {}
 
-  async handle (): Promise<Output> {
-    const category = await this.getAllCategory()
-    if (category !== undefined) {
-      return category
+  async handle (): Promise<HttpResponse<Category[] | Error>> {
+    try {
+      const category = await this.getAllCategory()
+      return ok(category)
+    } catch (error: any) {
+      return serverError(error)
     }
-
-    return new ServerError()
   }
 }

@@ -39,8 +39,8 @@ describe('GetOneByIdCategory', () => {
   it('Should return undefined if getOneByCategoryRepo.getOneById returns undefined', async () => {
     getOneByCategoryRepo.getOneById.mockResolvedValueOnce(undefined)
 
-    const categories = await sut({ id: 1 })
+    const category = await sut({ id: 1 })
 
-    expect(categories).toBeUndefined()
+    expect(category).toBeUndefined()
   })
 })

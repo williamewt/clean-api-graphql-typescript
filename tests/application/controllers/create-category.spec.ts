@@ -1,22 +1,25 @@
 import { Category } from '@prisma/client'
 import { CreateCategoryController } from '@/application/controllers'
-import { ServerError } from '@/application/errors'
+import { HttpResponse, serverError } from '@/application/helpers'
 
 describe('CreateCategoryController', () => {
   let createCategory: jest.Mock
   let sut: CreateCategoryController
   let name: string
-  let categoryData: Category
+  let categoryData: HttpResponse<Category>
 
   beforeAll(() => {
     createCategory = jest.fn()
     categoryData = {
-      id: 1,
-      name: 'any_name',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      data: {
+        id: 1,
+        name: 'any_name',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      statusCode: 200
     }
-    createCategory.mockResolvedValue(categoryData)
+    createCategory.mockResolvedValue(categoryData.data)
     name = 'any_name'
   })
 
@@ -31,17 +34,17 @@ describe('CreateCategoryController', () => {
     expect(createCategory).toHaveBeenCalledTimes(1)
   })
 
-  it('should return error if createCategory returns undefined', async () => {
-    createCategory.mockResolvedValueOnce(undefined)
-
-    const response = await sut.handle({ name })
-
-    expect(response).toEqual(new ServerError())
-  })
-
   it('should return a new data if createCategory success', async () => {
     const response = await sut.handle({ name })
 
     expect(response).toEqual(categoryData)
+  })
+
+  it('should return a Server Error if createCategory throws', async () => {
+    createCategory.mockRejectedValueOnce(new Error('any_error'))
+
+    const response = await sut.handle({ name })
+
+    expect(response).toEqual(serverError(new Error('any_error')))
   })
 })

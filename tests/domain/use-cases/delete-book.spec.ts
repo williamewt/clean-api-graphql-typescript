@@ -37,12 +37,4 @@ describe('DeleteBook', () => {
 
     expect(deleteBook).toEqual(deletedData)
   })
-
-  it('Should return undefined if book was not deleted', async () => {
-    deleteBookRepo.delete.mockResolvedValueOnce(undefined)
-
-    const deleteBook = await sut({ id: 1 })
-
-    expect(deleteBook).toBeUndefined()
-  })
 })

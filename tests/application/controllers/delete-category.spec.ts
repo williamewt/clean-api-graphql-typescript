@@ -1,22 +1,25 @@
 import { Category } from '@prisma/client'
 import { DeleteCategoryController } from '@/application/controllers'
-import { ServerError } from '@/application/errors'
+import { HttpResponse, serverError } from '@/application/helpers'
 
 describe('DeleteCategoryController', () => {
   let deleteCategory: jest.Mock
   let sut: DeleteCategoryController
   let id: number
-  let categoryData: Category
+  let categoryData: HttpResponse<Category>
 
   beforeAll(() => {
     deleteCategory = jest.fn()
     categoryData = {
-      id: 1,
-      name: 'any_name',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      data: {
+        id: 1,
+        name: 'any_name',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      statusCode: 200
     }
-    deleteCategory.mockResolvedValue(categoryData)
+    deleteCategory.mockResolvedValue(categoryData.data)
     id = 1
   })
 
@@ -31,17 +34,17 @@ describe('DeleteCategoryController', () => {
     expect(deleteCategory).toHaveBeenCalledTimes(1)
   })
 
-  it('should return error if deleteCategory returns undefined', async () => {
-    deleteCategory.mockResolvedValueOnce(undefined)
-
-    const response = await sut.handle({ id })
-
-    expect(response).toEqual(new ServerError())
-  })
-
   it('should return a new data if deleteCategory success', async () => {
     const response = await sut.handle({ id })
 
     expect(response).toEqual(categoryData)
+  })
+
+  it('should return a Server Error if deleteCategory throws', async () => {
+    deleteCategory.mockRejectedValueOnce(new Error('any_error'))
+
+    const response = await sut.handle({ id })
+
+    expect(response).toEqual(serverError(new Error('any_error')))
   })
 })

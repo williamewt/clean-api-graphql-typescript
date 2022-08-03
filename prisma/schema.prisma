@@ -14,7 +14,7 @@ model Author  {
   createdAt       DateTime?     @default(now()) @db.Timestamp(6)
   updatedAt       DateTime?     @updatedAt
 
-  @@map("users")
+  @@map("authors")
 }
 
 model Category  {

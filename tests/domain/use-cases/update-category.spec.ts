@@ -38,11 +38,11 @@ describe('UpdateCategory', () => {
     expect(newCategory).toEqual(categoryData)
   })
 
-  it('Should return undefined if updateCategoryRepo.update returns undefined', async () => {
+  it('Should return undefined if updateCategoryRepo.getOneById returns undefined', async () => {
     updateCategoryRepo.update.mockResolvedValueOnce(undefined)
 
-    const newCategory = await sut(newCategoryData)
+    const book = await sut(newCategoryData)
 
-    expect(newCategory).toBeUndefined()
+    expect(book).toBeUndefined()
   })
 })

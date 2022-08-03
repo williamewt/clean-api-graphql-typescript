@@ -8,6 +8,6 @@ type Output = Category | undefined
 export type GetOneByIdCategory = (params: Input) => Promise<Output>
 
 export const setupGetOneByIdCategory: Setup = (getOneByCategoryRepo) => async params => {
-  const categories = await getOneByCategoryRepo.getOneById(params)
-  return categories
+  const category = await getOneByCategoryRepo.getOneById(params)
+  return category
 }
